@@ -29,4 +29,16 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
     }
+
+    public function test_new_users_can_register_fail()
+    {
+        $response = $this->post('/register', [
+            'name' => null,
+            'email' => null,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertStatus(302);
+    }
 }
